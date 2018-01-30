@@ -21,9 +21,14 @@ namespace SinglyLinkedListExample
         public Node Head;
 
         /// <summary>
-        /// Capacity of the list
+        /// Maximum Capacity of the list
         /// </summary>
         public int  Capacity { get; private set; }
+
+        /// <summary>
+        /// Sorting Algorithms
+        /// </summary>
+        public enum SortingAlgo { MergeSort };
 
         /// <summary>
         /// Constructor
@@ -128,6 +133,10 @@ namespace SinglyLinkedListExample
         #endregion
 
         #region Delete List
+        /// <summary>
+        /// Delete List at particular position
+        /// </summary>
+        /// <param name="position"></param>
         public void Delete(int position)
         {
             Node previousNode = null;
@@ -167,21 +176,35 @@ namespace SinglyLinkedListExample
         #endregion
 
         #region Search and Printing
+        /// <summary>
+        /// Find Node Index by Value
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public int Find(string value)
         {
+            Node node = Head;
             int index = -1;
-            for (int i = 1; i <= Capacity; i++)
+            int count = 0;
+
+            while (node != null)
             {
-                var node = Get(i);
-                if (node!=null && node.Equals(value))
+                count++;
+                if (node.Content.Equals(value))
                 {
-                    index = i;
+                    index = count;
                     break;
                 }
+                node = node.Next;
             }
+
             return index;
         }
 
+        /// <summary>
+        /// Print List
+        /// </summary>
+        /// <returns></returns>
         public string Print()
         {
             String retString = String.Empty;
@@ -197,6 +220,16 @@ namespace SinglyLinkedListExample
         #endregion
 
         #region Sorting
+        /// <summary>
+        /// Sorting the list using
+        /// </summary>
+        public void Sort(SortingAlgo algo = SortingAlgo.MergeSort)
+        {
+            // This allows multiple Sorting Agorithms
+            if (algo == SortingAlgo.MergeSort)
+                MergeSort(ref this.Head);
+        }
+
         /// <summary>
         /// Merge Sort Method implementing Split and Concour algorithm
         /// </summary>
@@ -264,13 +297,12 @@ namespace SinglyLinkedListExample
         /// <returns></returns>
         private Node SortedMerge(Node a, Node b)
         {
-            Node result = new Node();
-
             if (a == null)
                 return b;
             else if (b == null)
                 return a;
 
+            Node result;
             if (Less(a.Content, b.Content))
             {
                 result = a;

@@ -111,7 +111,7 @@ namespace SinglyLinkedListExample.Tests
             var initialOrder = list.Print();
 
             // Fast Sort by Merging
-            list.MergeSort(ref list.Head);
+            list.Sort();
 
             // Get final order
             var finalOrder = list.Print();
